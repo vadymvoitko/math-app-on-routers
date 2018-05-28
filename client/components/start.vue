@@ -1,8 +1,10 @@
 <template>
   <div class='alert alert-secondary'>
   <h3>Are you ready?</h3>
-  <button @click="ClickStart" class="btn btn-success">Start</button>
-    
+  <router-link to="/message">
+      <button @click="ClickStart" class="btn btn-success">Start</button>
+  </router-link>
+  
   </div>
 </template>
 

@@ -12,33 +12,17 @@
 <!--listen to an action StartEmit and start changeState on it-->
 <!--IMPORTANT !!! mode="in-out" FOR NON-SIMULTANIOUS ANIMATION-->
    <transition name = "rotate" mode="out-in">
-        <start @StartEmit="changeState('message')"
-               v-if="state == 'start'"
-        ></start>
 
-                    <message 
-                         v-else-if="state=='message'"
-                         @success="onQuestSuccess"
-                         @error="onQuestError"
-                         class="alert-info"
-                         />
-        <!-- we decl type and text in parent to throw to props of child in success.vue -->
-        <!-- parent is component here, child is file .vue with template/script/style -->
-        <success v-else-if="state=='success'"
-                :type="message.type"
-                :text="message.text"
-                :class="message.type"
-                @next="onNext()"
-        ></success>
-        <finish v-else-if="state=='finish'"
-                :success="this.stats.success"
-                :numberQuest="this.questDone"
-                :class="message.resultType"
-                @startNew="startNew()"
-        ></finish>
-        <div v-else>not defined</div>
+        <router-view @onAnswer2="onAns"
+                     @ResetCounter="ResetCounter"
+                     @success="onQuestSuccess"
+                     @error="onQuestError"
+                     :counter="counter"
+                     :counterR="stats.success"
+                     :counterF="stats.error"
+                     />
     </transition>
-    <router-view/>
+
   </div>
 
 </template>
@@ -61,7 +45,8 @@ export default {
         success: 0,
         error: 0
       },
-      numberQuest: 3
+      numberQuest: 3,
+      counter: 0
     }
   },
   // computed is initiated when any var is changed
@@ -74,21 +59,17 @@ export default {
     }
   },
   methods: {
+    onAns (countAll) {
+        this.counter ++
+    },
     changeState: function (ev) {
       this.state = ev
     },
     onQuestSuccess () {
-      this.state = 'success'
-      this.message.text = 'Good Job'
-      this.message.type = 'alert-success'
       this.stats.success++
     },
     onQuestError (msg) {
-      this.state = 'success'
-      this.message.text = msg
-      this.message.type = 'alert-warning'
       this.stats.error++
-      this.message.resultType = 'alert-warning'
     },
     onNext () {
       if (this.questDone === this.numberQuest) {
@@ -101,6 +82,11 @@ export default {
       this.state = 'message'
       this.stats.error = this.stats.success = 0
       this.message.resultType = 'alert-success'
+    },
+    ResetCounter () {
+        console.log('ResetCounter');
+        this.counter=0;
+        this.stats.error = this.stats.success = 0
     }
   }
 }

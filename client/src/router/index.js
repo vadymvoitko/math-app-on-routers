@@ -21,9 +21,9 @@ Vue.use(Router)
 
 const routes = [
     {path: '/start', component: start },
-    {path: '/message', component: message },
-    {path: '/success', component: success },
-    {path: '/finish', component: finish }
+    {path: '/message', name: 'message', component: message },
+    {path: '/success', name: 'succ', component: success, props: true },
+    {path: '/finish', name: 'fin', component: finish }
 ]
 
 
