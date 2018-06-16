@@ -6,7 +6,7 @@
         <hr>
         <router-link :to="{name: 'message', params: {}}">
             <button class="btn btn-primary" 
-                    @click="                    $emit('ResetCounter')"
+                    @click="$emit('ResetCounter')"
                >
                 GO
             </button>   

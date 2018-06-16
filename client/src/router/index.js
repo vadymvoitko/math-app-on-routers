@@ -9,6 +9,11 @@ import start from '../components/start.vue'
 import message from '../components/message.vue'
 import success from '../components/success.vue'
 import finish from '../components/finish.vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
+Vue.use(VueAxios, axios)
+
 Vue.use(VueTimers)
 global.jQuery = jQuery
 let Bootstrap = require('bootstrap')
@@ -23,7 +28,9 @@ const routes = [
     {path: '/start', component: start },
     {path: '/message', name: 'message', component: message },
     {path: '/success', name: 'succ', component: success, props: true },
-    {path: '/finish', name: 'fin', component: finish }
+    {path: '/finish', name: 'fin', component: finish },
+    {path: "/", redirect:'/start'},
+    {path: "/#/", redirect:'/start'}
 ]
 
 

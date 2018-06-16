@@ -9,6 +9,7 @@
           </div>
         </div>
         <br>
+        <div class="level-info text-center font-weight-bold">Level {{ level }} !</div>
 <!--listen to an action StartEmit and start changeState on it-->
 <!--IMPORTANT !!! mode="in-out" FOR NON-SIMULTANIOUS ANIMATION-->
    <transition name = "rotate" mode="out-in">
@@ -20,6 +21,7 @@
                      :counter="counter"
                      :counterR="stats.success"
                      :counterF="stats.error"
+                     :level="this.level"
                      />
     </transition>
 
@@ -46,7 +48,8 @@ export default {
         error: 0
       },
       numberQuest: 3,
-      counter: 0
+      counter: 0,
+      level: 1
     }
   },
   // computed is initiated when any var is changed
@@ -84,9 +87,9 @@ export default {
       this.message.resultType = 'alert-success'
     },
     ResetCounter () {
-        console.log('ResetCounter');
         this.counter=0;
-        this.stats.error = this.stats.success = 0
+        this.stats.error = this.stats.success = 0;
+        this.level += 1
     }
   }
 }
@@ -117,5 +120,9 @@ export default {
     @keyframes rotateOutX{
         from{transform: rotateX(0deg);}
         to{transform: rotateX(90deg);}
+    }
+    .level-info {
+        font-size: 30px;
+        color: blue;
     }
 </style>
